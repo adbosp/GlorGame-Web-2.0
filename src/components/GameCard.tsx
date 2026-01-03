@@ -10,7 +10,8 @@ export function GameCard({ game }: GameCardProps) {
     <div
       className="
         relative
-        rounded-2xl overflow-hidden
+        rounded-2xl
+        overflow-hidden
         bg-white/10
         backdrop-blur-xl
         border border-white/20
@@ -20,25 +21,35 @@ export function GameCard({ game }: GameCardProps) {
         hover:shadow-[0_20px_60px_rgba(0,0,0,0.6)]
       "
     >
-      {/* IMAGE */}
-      <div className="relative">
+      {/* ===== ICON AREA (SUPPORT TRANSPARENT PNG) ===== */}
+      <div
+        className="
+          relative aspect-square w-full
+          flex items-center justify-center
+          bg-black/30
+        "
+      >
         <img
           src={game.imageUrl}
           alt={game.title}
-          className="w-full h-48 object-cover"
+          className="
+            w-[88%] h-[88%]
+            object-contain
+            drop-shadow-[0_8px_24px_rgba(0,0,0,0.45)]
+          "
         />
 
-        {/* CINEMATIC OVERLAY */}
-        <div className="absolute inset-0 bg-gradient-to-t from-black/60 via-black/25 to-transparent" />
+        {/* subtle vignette – NOT white */}
+        <div className="absolute inset-0 bg-gradient-to-t from-black/40 via-black/10 to-transparent" />
       </div>
 
-      {/* CONTENT */}
-      <div className="p-6">
-        <h3 className="text-xl font-semibold text-white mb-2">
+      {/* ===== CONTENT ===== */}
+      <div className="p-5">
+        <h3 className="text-lg font-semibold text-white mb-1 truncate">
           {game.title}
         </h3>
 
-        <p className="text-gray-300 text-sm mb-5 line-clamp-2">
+        <p className="text-gray-300 text-sm mb-4 line-clamp-2">
           {game.description}
         </p>
 
