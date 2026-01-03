@@ -1,98 +1,224 @@
-import { useState, useEffect } from 'react';
-import { useLocation, Link } from 'react-router-dom';
-import { Menu, X } from 'lucide-react';
-import '../google-fonts.css';
+import { useState, useEffect } from "react";
+import { useLocation, useNavigate } from "react-router-dom";
+import { Menu, X } from "lucide-react";
+import "../google-fonts.css";
+
+/* ================= SECTION CONFIG (HOME ONLY) ================= */
+const SECTIONS = [
+  { id: "home", label: "Home" },
+  { id: "about", label: "About" },
+];
 
 export function Navigation() {
   const location = useLocation();
+  const navigate = useNavigate(); // ✅ ĐÚNG CHỖ
+
+  const [activeSection, setActiveSection] = useState<string>("home");
   const [isScrolled, setIsScrolled] = useState(false);
   const [isMenuOpen, setIsMenuOpen] = useState(false);
-  
+
+  /* ================= NAV BACKGROUND ================= */
   useEffect(() => {
-    const handleScroll = () => {
-      setIsScrolled(window.scrollY > 20);
-    };
-    
-    window.addEventListener('scroll', handleScroll);
-    return () => window.removeEventListener('scroll', handleScroll);
+    const onScroll = () => setIsScrolled(window.scrollY > 20);
+    window.addEventListener("scroll", onScroll, { passive: true });
+    return () => window.removeEventListener("scroll", onScroll);
   }, []);
-  
-  const isActive = (path: string) => location.pathname === path;
-  
+
+  /* ================= RESET WHEN LEAVING HOME ================= */
+  useEffect(() => {
+    if (location.pathname !== "/") {
+      setActiveSection("");
+    } else {
+      setActiveSection("home");
+    }
+  }, [location.pathname]);
+
+  /* ================= SCROLL SPY (SAFE ATTACH) ================= */
+  useEffect(() => {
+    if (location.pathname !== "/") return;
+
+    let observer: IntersectionObserver | null = null;
+    let rafId: number;
+
+    const attachObserver = () => {
+      const sections = SECTIONS
+        .map((s) => document.getElementById(s.id))
+        .filter(Boolean) as HTMLElement[];
+
+      if (sections.length !== SECTIONS.length) {
+        rafId = requestAnimationFrame(attachObserver);
+        return;
+      }
+
+      observer = new IntersectionObserver(
+        (entries) => {
+          const visible = entries.filter((e) => e.isIntersecting);
+          if (!visible.length) return;
+
+          visible.sort(
+            (a, b) => b.intersectionRatio - a.intersectionRatio
+          );
+
+          setActiveSection(visible[0].target.id);
+        },
+        {
+          threshold: [0.2, 0.4, 0.6],
+          rootMargin: "-30% 0px -45% 0px",
+        }
+      );
+
+      sections.forEach((el) => observer!.observe(el));
+    };
+
+    rafId = requestAnimationFrame(attachObserver);
+
+    return () => {
+      observer?.disconnect();
+      cancelAnimationFrame(rafId);
+    };
+  }, [location.pathname]);
+
+  /* ================= ACTIONS ================= */
+  const scrollTo = (id: string) => {
+    setIsMenuOpen(false);
+
+    if (location.pathname !== "/") {
+      navigate("/");
+      setTimeout(() => {
+        document.getElementById(id)?.scrollIntoView({
+          behavior: "smooth",
+          block: "start",
+        });
+      }, 100);
+      return;
+    }
+
+    document.getElementById(id)?.scrollIntoView({
+      behavior: "smooth",
+      block: "start",
+    });
+  };
+
+  const goToGames = () => {
+    setIsMenuOpen(false);
+    navigate("/games");
+  };
   return (
-    <nav
-      className={`fixed w-full z-50 transition-all duration-300 ${
-        isScrolled ? 'bg-white/90 backdrop-blur-md shadow-lg' : 'bg-transparent'
-      }`}
-    >
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-        <div className="flex items-center justify-between h-20">
-          <Link to="/" className="flex items-center space-x-2">
-            <img src="https://res.cloudinary.com/dk7hsdijn/image/upload/c_thumb,w_200,g_face/v1741444897/Logo_dxl23c.png" alt="Logo" className="h-14 w-15" />
-            <span className="montserrat-uniquifier text-2xl text-black">GLORGAMES</span>
-          </Link>
-          
+    <nav className="fixed top-6 left-0 right-0 z-50 flex justify-center pointer-events-none">
+      <div
+        className={`pointer-events-auto
+          transition-all duration-300 ease-in-out
+          ${
+            isScrolled
+              ? "bg-white/15 backdrop-blur-xl shadow-[0_8px_30px_rgba(0,0,0,0.35)]"
+              : "bg-white/10 backdrop-blur-lg"
+          }
+          ${
+            isMenuOpen
+              ? "rounded-3xl md:rounded-full"
+              : "rounded-full"
+          }
+          border border-white/20
+        `}
+      >
+        {/* TOP BAR */}
+        <div className="flex items-center h-16 px-6 md:px-10 gap-10">
+          {/* LOGO */}
           <button
-            onClick={() => setIsMenuOpen(!isMenuOpen)}
-            className="md:hidden text-black"
+            onClick={() => scrollTo("home")}
+            className="flex items-center gap-2"
           >
-            {isMenuOpen ? <X className="h-6 w-6" /> : <Menu className="h-6 w-6" />}
+            <img
+              src="https://res.cloudinary.com/dk7hsdijn/image/upload/c_thumb,w_200,g_face/v1741444897/Logo_dxl23c.png"
+              alt="GLORGAMES"
+              className="h-10 w-auto"
+            />
+            <span className="montserrat-uniquifier text-xl text-white">
+              GLORGAMES
+            </span>
           </button>
-          
-          <div className="hidden md:flex space-x-10">
-            {[{
-              path: '/', label: 'Home'
-            }, {
-              path: '/games', label: 'Games'
-            }, {
-              path: '/about', label: 'About'
-            }].map(({ path, label }) => (
-              <Link
-                key={path}
-                to={path}
-                className={`text-lg font-medium transition-colors duration-300 ${
-                  isActive(path)
-                    ? 'text-black'
-                    : 'text-gray-600 hover:text-black'
+
+          {/* DESKTOP MENU */}
+          <div className="hidden md:flex items-center gap-8">
+            {SECTIONS.map((s) => (
+              <button
+                key={s.id}
+                onClick={() => scrollTo(s.id)}
+                className={`relative text-sm font-medium transition-colors ${
+                  activeSection === s.id
+                    ? "text-white"
+                    : "text-gray-300 hover:text-white"
                 }`}
               >
-                {label}
-              </Link>
+                {s.label}
+                {activeSection === s.id && (
+                  <span className="absolute -bottom-1 left-0 right-0 h-[2px] bg-white/80 rounded-full" />
+                )}
+              </button>
             ))}
-          </div>
-        </div>
-      </div>
-      
-      <div
-        className={`md:hidden transition-all duration-300 ${
-          isMenuOpen
-            ? 'h-64 bg-white/90 backdrop-blur-md shadow-lg'
-            : 'h-0 overflow-hidden'
-        }`}
-      >
-        <div className="px-4 py-2 space-y-4">
-          {[{
-            path: '/', label: 'Home'
-          }, {
-            path: '/games', label: 'Games'
-          }, {
-            path: '/about', label: 'About'
-          }].map(({ path, label }) => (
-            <Link
-              key={path}
-              to={path}
-              className={`block text-lg font-medium ${
-                isActive(path)
-                  ? 'text-black'
-                  : 'text-gray-600 hover:text-black'
+
+            {/* OUR GAMES */}
+            <button
+              onClick={goToGames}
+              className={`relative text-sm font-medium transition-colors ${
+                location.pathname === "/games"
+                  ? "text-white"
+                  : "text-gray-300 hover:text-white"
               }`}
-              onClick={() => setIsMenuOpen(false)}
             >
-              {label}
-            </Link>
-          ))}
+              Our Games
+              {location.pathname === "/games" && (
+                <span className="absolute -bottom-1 left-0 right-0 h-[2px] bg-white/80 rounded-full" />
+              )}
+            </button>
+          </div>
+
+          {/* MOBILE TOGGLE */}
+          <button
+            onClick={() => setIsMenuOpen(!isMenuOpen)}
+            className="md:hidden text-white"
+          >
+            {isMenuOpen ? <X size={20} /> : <Menu size={20} />}
+          </button>
+        </div>
+
+        {/* MOBILE MENU */}
+        <div
+          className={`md:hidden overflow-hidden transition-all duration-300 ${
+            isMenuOpen ? "max-h-72 opacity-100" : "max-h-0 opacity-0"
+          }`}
+        >
+          <div className="px-6 pb-4 pt-2 space-y-3">
+            {SECTIONS.map((s) => (
+              <button
+                key={s.id}
+                onClick={() => scrollTo(s.id)}
+                className={`block w-full text-left text-sm font-medium ${
+                  activeSection === s.id
+                    ? "text-white"
+                    : "text-gray-300 hover:text-white"
+                }`}
+              >
+                {s.label}
+              </button>
+            ))}
+
+            <button
+              onClick={goToGames}
+              className={`block w-full text-left text-sm font-medium ${
+                location.pathname === "/games"
+                  ? "text-white"
+                  : "text-gray-300 hover:text-white"
+              }`}
+            >
+              Our Games
+            </button>
+          </div>
         </div>
       </div>
     </nav>
   );
+
+
+
 }
