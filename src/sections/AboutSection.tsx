@@ -4,6 +4,7 @@ import { db } from "../firebase";
 import { motion } from "framer-motion";
 import { aboutCollection } from "../types";
 import { InteractiveBackground } from "../components/InteractiveBackground";
+import { Floating3DItems } from "../components/Floating3DItems";
 
 export function AboutSection() {
   const [aboutInfo, setAboutInfo] = useState("");
@@ -18,14 +19,25 @@ export function AboutSection() {
   }, []);
 
   return (
-    <section id="about" className="relative pt-20 pb-28">
+    <section
+      id="about"
+      className="relative pt-36 pb-36 overflow-hidden"
+      style={{ perspective: "1200px" }}
+    >
       <InteractiveBackground />
+
+      {/* FLOATING LOTTIE ITEMS */}
+      <div className="absolute inset-0 z-0">
+        <Floating3DItems />
+      </div>
+
+      {/* CONTENT */}
       <motion.div
         initial={{ opacity: 0, y: 40 }}
         whileInView={{ opacity: 1, y: 0 }}
         viewport={{ once: true }}
         transition={{ duration: 0.8 }}
-        className="max-w-5xl mx-auto px-6 text-center"
+        className="relative z-10 max-w-5xl mx-auto px-6 text-center"
       >
         <p className="text-xs uppercase tracking-widest text-gray-500 mb-6">
           About our studio

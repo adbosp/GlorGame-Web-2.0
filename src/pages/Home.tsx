@@ -126,8 +126,7 @@ export function Home() {
               <ArrowRight className="ml-3 h-5 w-5 transform group-hover:translate-x-1 transition-transform" />
             </Link>
           </div>
-
-          {/* 🔥 NEWS OVERLAY – PHẢI Ở ĐÂY */}
+          {/* NEWS SECTION */}
           <NewsSection />
         </motion.section>
       )}
@@ -160,7 +159,7 @@ export function Home() {
           </div>
         </section>
         {/* ================= PARTNERS ================= */}
-        <section id="partners" className="relative pt-16 pb-20">
+        <section id="partners" className="relative pt-10 pb-10">
           <div className="max-w-7xl mx-auto px-6 text-center">
             <p className="text-sm uppercase tracking-widest text-gray-500 mb-10">
               Technology platforms & partners
