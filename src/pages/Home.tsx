@@ -151,7 +151,6 @@ export function Home() {
             relative
             min-h-screen
             flex
-            pt-[260px] md:pt-[220px]
             items-center
             bg-black
           "

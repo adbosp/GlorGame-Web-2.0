@@ -31,14 +31,14 @@ export function AboutSection() {
           About our studio
         </p>
 
-        <h2 className="text-4xl md:text-6xl font-bold mb-8 text-white">
+        <h2 className="text-6xl md:text-8xl font-bold mb-8 text-white">
           We build meaningful{" "}
           <span className="interactive-worlds inline-block">
             interactive worlds
           </span>
         </h2>
 
-        <p className="text-lg md:text-xl text-gray-400 leading-relaxed">
+        <p className="text-lg md:text-2xl text-gray-400 leading-relaxed">
           {aboutInfo || "Loading..."}
         </p>
       </motion.div>
