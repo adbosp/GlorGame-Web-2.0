@@ -7,36 +7,35 @@ type NewsItem = {
   description: string;
   image: string;
 };
-
 /* ================= DATA ================= */
 const NEWS: NewsItem[] = [
   {
     id: "1",
-    title: "How Millions Played, Stayed, and Shared",
-    description: "SundayBaby continues to break records worldwide.",
+    title: "A New Pet World Begins",
+    description: "SundayBaby is our first step into the world of virtual pets.",
     image:
-      "https://images.unsplash.com/photo-1605902711622-cfb43c4437d1?w=720&q=60&auto=format",
+      "https://ik.imagekit.io/qxqjfbhle/Gemini_Generated_Image_j2mq34j2mq34j2mq.png",
   },
   {
     id: "2",
-    title: "1 Years of SundayBaby",
-    description: "A classic icon returns stronger than ever.",
+    title: "Built by a Small Studio",
+    description: "Crafted with passion by a team that loves pet games.",
     image:
-      "https://images.unsplash.com/photo-1542751371-adc38448a05e?w=720&q=60&auto=format",
+      "https://ik.imagekit.io/qxqjfbhle/ChatGPT%20Image%2021_10_23%205%20thg%201,%202026.png",
   },
   {
     id: "3",
-    title: "A World of Imagination",
-    description: "Expanding the SundayBaby universe.",
+    title: "Designed for Everyday Joy",
+    description: "Short moments of happiness, anytime you open the game.",
     image:
-      "https://images.unsplash.com/photo-1518770660439-4636190af475?w=720&q=60&auto=format",
+      "https://ik.imagekit.io/qxqjfbhle/ChatGPT%20Image%2021_03_17%205%20thg%201,%202026.png",
   },
   {
     id: "4",
-    title: "A New Chapter",
-    description: "What’s next for SundayBaby.",
+    title: "The Road Ahead",
+    description: "We’re just getting started on this pet adventure.",
     image:
-      "https://images.unsplash.com/photo-1521737604893-d14cc237f11d?w=720&q=60&auto=format",
+      "https://ik.imagekit.io/qxqjfbhle/IconlogoSunday.png?updatedAt=1767406321134",
   },
 ];
 
