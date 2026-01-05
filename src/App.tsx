@@ -7,8 +7,6 @@ import PrivacyPolicy from "./pages/PrivacyPolicy";
 import Document from "./pages/Document";
 import TermsOfService from "./pages/TermsOfService";
 import Help from "./pages/Help";
-import { FaFacebook, FaYoutube } from "react-icons/fa";
-import { FaSquareXTwitter } from "react-icons/fa6";
 import "./google-fonts.css";
 
 /* ================= SCROLL TO TOP ON ROUTE CHANGE ================= */
@@ -43,7 +41,7 @@ function Footer() {
           {/* LOGO – FULL WIDTH */}
           <div className="col-span-2 md:col-span-1 flex items-start">
             <img
-              src="https://res.cloudinary.com/dk7hsdijn/image/upload/c_thumb,w_200,g_face/v1741444897/Logo_dxl23c.png"
+              src="https://res.cloudinary.com/dk7hsdijn/image/upload/v1767576939/Logo_xhvxkx.svg"
               alt="GlorGames Logo"
               className="h-9 w-auto"
             />
@@ -155,7 +153,12 @@ function Footer() {
 /* ================= APP ================= */
 function App() {
   return (
-    <Router>
+    <Router
+      future={{
+        v7_startTransition: true,
+        v7_relativeSplatPath: true,
+      }}
+    >
       <ScrollToTop />
 
       <div className="min-h-screen bg-white flex flex-col">

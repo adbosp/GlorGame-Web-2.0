@@ -129,7 +129,7 @@ export function Navigation() {
             className="flex items-center gap-2"
           >
             <img
-              src="https://res.cloudinary.com/dk7hsdijn/image/upload/c_thumb,w_200,g_face/v1741444897/Logo_dxl23c.png"
+              src="https://res.cloudinary.com/dk7hsdijn/image/upload/v1767576939/Logo_xhvxkx.svg"
               alt="GLORGAMES"
               className="h-10 w-auto"
             />

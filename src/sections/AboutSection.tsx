@@ -30,8 +30,10 @@ export function AboutSection() {
         </p>
 
         <h2 className="text-4xl md:text-6xl font-bold mb-8 text-white">
-          We build meaningful
-          <span className="text-gray-300"> interactive worlds</span>
+          We build meaningful{" "}
+          <span className="interactive-worlds inline-block">
+            Interactive Worlds
+          </span>
         </h2>
 
         <p className="text-lg md:text-xl text-gray-400 leading-relaxed">
