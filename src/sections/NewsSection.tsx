@@ -70,15 +70,17 @@ export function NewsSection() {
             <div
               key={item.id}
               className="
-                snap-center
-                shrink-0
+              snap-center
+              flex justify-center
 
-                w-full
-                sm:w-[85%]
-                md:w-auto
+              shrink-0
+              w-full
+              sm:w-[85%]
 
-                flex justify-center
-              "
+              md:shrink
+              md:flex-1
+              md:min-w-0
+            "
             >
               <NewsCard item={item} />
             </div>
@@ -95,8 +97,11 @@ function NewsCard({ item }: { item: NewsItem }) {
     <div
       className="
         w-full
-        sm:w-[360px]
-        md:w-[360px]
+        max-w-[360px]
+
+        md:max-w-[220px]
+        lg:max-w-[260px]
+        xl:max-w-[300px]
 
         rounded-2xl
         overflow-hidden
@@ -105,6 +110,7 @@ function NewsCard({ item }: { item: NewsItem }) {
         group
       "
     >
+
       <div className="relative h-56 overflow-hidden">
         <img
           src={item.image}

@@ -16,78 +16,72 @@ export default function CookieConsent() {
     setVisible(false);
   };
 
-  const decline = () => {
-    localStorage.setItem(STORAGE_KEY, "declined");
-    setVisible(false);
-  };
-
   if (!visible) return null;
 
   return (
     <AnimatePresence>
       <motion.div
-        initial={{ opacity: 0, y: 40 }}
+        initial={{ opacity: 0, y: 16 }}
         animate={{ opacity: 1, y: 0 }}
-        exit={{ opacity: 0, y: 40 }}
-        transition={{ duration: 0.35, ease: "easeOut" }}
+        exit={{ opacity: 0, y: 16 }}
+        transition={{ duration: 0.25, ease: "easeOut" }}
         className="
           fixed bottom-0 left-0 right-0
           z-[100]
-          backdrop-blur-xl
-          bg-white/70 dark:bg-black/60
-          border-t border-white/30 dark:border-white/10
         "
       >
+        {/* GLASS BACKGROUND (FULL WIDTH) */}
         <div
           className="
-            max-w-7xl mx-auto
-            px-6 py-4
-            flex flex-col md:flex-row
-            items-start md:items-center
-            justify-between
-            gap-4
+            backdrop-blur-xl
+            bg-white/10 dark:bg-black/20
+            border-t border-white/20 dark:border-white/10
           "
         >
-          {/* TEXT */}
-          <p className="text-sm text-gray-800 dark:text-gray-200 leading-relaxed max-w-3xl">
-            We use cookies to make our site work. We’d also like to set analytics
-            cookies to help us improve our website by collecting and reporting
-            information on how you use it.{" "}
-            <a
-              href="/privacy-policy"
-              className="text-orange-500 underline ml-1"
-            >
-              Learn more
-            </a>
-          </p>
+          {/* CONTENT */}
+          <div
+            className="
+              max-w-7xl mx-auto
+              px-6 py-4
+              flex items-center justify-between
+              gap-6
+            "
+          >
+            {/* TEXT */}
+            <div className="max-w-3xl">
+              <h4 className="text-sm font-semibold text-white mb-1">
+                About cookies
+              </h4>
 
-          {/* ACTIONS */}
-          <div className="flex gap-3 shrink-0">
-            <button
-              onClick={decline}
-              className="
-                px-5 py-2 text-sm
-                rounded-md
-                border border-gray-400/40
-                text-gray-800 dark:text-gray-200
-                hover:bg-black/5 dark:hover:bg-white/10
-                transition
-              "
-            >
-              DECLINE
-            </button>
+              <p className="text-xs text-white/80 leading-relaxed">
+                This website uses cookies for the display of the website and its
+                features. Please see more information about cookies used in our{" "}
+                <a
+                  href="/cookie-policy"
+                  className="underline text-white font-medium"
+                >
+                  Cookie Policy
+                </a>
+                .
+              </p>
+            </div>
 
+            {/* ACTION */}
             <button
               onClick={accept}
               className="
-                px-5 py-2 text-sm
-                rounded-md
-                bg-orange-500 text-white
-                hover:bg-orange-600
+                shrink-0
+                flex items-center gap-2
+                px-4 py-2
+                rounded-full
+                bg-black text-white
+                text-sm font-medium
+                hover:bg-black/90
                 transition
               "
             >
-              ACCEPT
+              Ok
+              <span className="text-base leading-none">✓</span>
             </button>
           </div>
         </div>

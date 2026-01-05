@@ -7,7 +7,6 @@ import { collection, getDocs } from "firebase/firestore";
 import { db } from "../firebase";
 import { HeroContent } from "../types";
 import { NewsSection } from "../sections/NewsSection";
-
 /* ================= PARTNERS DATA ================= */
 const PARTNERS = [
   { name: "Unity", logo: "https://ik.imagekit.io/qxqjfbhle/Logo%20Brand/Official_unity_logo.svg" },
@@ -130,7 +129,6 @@ export function Home() {
           <NewsSection />
         </motion.section>
       )}
-
       {/* ================= PARTNERS + ABOUT ================= */}
       <section className="relative bg-black overflow-hidden">
         <div

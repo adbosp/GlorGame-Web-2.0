@@ -20,11 +20,17 @@ import Help from "./pages/Help";
 import "./google-fonts.css";
 
 /* ================= SCROLL TO TOP ON ROUTE CHANGE ================= */
+/**
+ * Native scroll – ổn định, không phá layout
+ */
 function ScrollToTop() {
   const { pathname } = useLocation();
 
   useEffect(() => {
-    window.scrollTo({ top: 0, behavior: "instant" as ScrollBehavior });
+    window.scrollTo({
+      top: 0,
+      behavior: "auto", // ⚠️ KHÔNG dùng "smooth"
+    });
   }, [pathname]);
 
   return null;
@@ -175,20 +181,17 @@ function App() {
         v7_relativeSplatPath: true,
       }}
     >
+      {/* Scroll reset khi đổi route */}
       <ScrollToTop />
 
-      <div className="min-h-screen bg-white flex flex-col">
+      {/* Root layout */}
+      <div className="min-h-screen w-full bg-white flex flex-col">
         <Navigation />
 
-        <main className="flex-1">
+        <main className="flex-1 w-full">
           <Routes>
-            {/* LANDING */}
             <Route path="/" element={<Home />} />
-
-            {/* GAMES */}
             <Route path="/games" element={<Games />} />
-
-            {/* LEGAL / DOCS */}
             <Route path="/privacy-policy" element={<PrivacyPolicy />} />
             <Route path="/terms-of-service" element={<TermsOfService />} />
             <Route path="/document" element={<Document />} />
@@ -199,7 +202,7 @@ function App() {
         <Footer />
       </div>
 
-      {/* 🍪 COOKIE CONSENT (hiện 1 lần) */}
+      {/* 🍪 COOKIE CONSENT */}
       <CookieConsent />
     </Router>
   );
