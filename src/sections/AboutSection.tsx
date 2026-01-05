@@ -3,6 +3,7 @@ import { collection, getDocs } from "firebase/firestore";
 import { db } from "../firebase";
 import { motion } from "framer-motion";
 import { aboutCollection } from "../types";
+import { InteractiveBackground } from "../components/InteractiveBackground";
 
 export function AboutSection() {
   const [aboutInfo, setAboutInfo] = useState("");
@@ -18,6 +19,7 @@ export function AboutSection() {
 
   return (
     <section id="about" className="relative pt-20 pb-28">
+      <InteractiveBackground />
       <motion.div
         initial={{ opacity: 0, y: 40 }}
         whileInView={{ opacity: 1, y: 0 }}

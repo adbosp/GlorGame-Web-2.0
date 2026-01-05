@@ -11,7 +11,7 @@ const SECTIONS = [
 
 export function Navigation() {
   const location = useLocation();
-  const navigate = useNavigate(); // ✅ ĐÚNG CHỖ
+  const navigate = useNavigate();
 
   const [activeSection, setActiveSection] = useState<string>("home");
   const [isScrolled, setIsScrolled] = useState(false);
@@ -33,7 +33,7 @@ export function Navigation() {
     }
   }, [location.pathname]);
 
-  /* ================= SCROLL SPY (SAFE ATTACH) ================= */
+  /* ================= SCROLL SPY ================= */
   useEffect(() => {
     if (location.pathname !== "/") return;
 
@@ -58,7 +58,6 @@ export function Navigation() {
           visible.sort(
             (a, b) => b.intersectionRatio - a.intersectionRatio
           );
-
           setActiveSection(visible[0].target.id);
         },
         {
@@ -89,7 +88,7 @@ export function Navigation() {
           behavior: "smooth",
           block: "start",
         });
-      }, 100);
+      }, 120);
       return;
     }
 
@@ -103,8 +102,10 @@ export function Navigation() {
     setIsMenuOpen(false);
     navigate("/games");
   };
+
   return (
     <nav className="fixed top-6 left-0 right-0 z-50 flex justify-center pointer-events-none">
+      {/* ================= TOP GLASS BAR ================= */}
       <div
         className={`pointer-events-auto
           transition-all duration-300 ease-in-out
@@ -113,11 +114,7 @@ export function Navigation() {
               ? "bg-white/15 backdrop-blur-xl shadow-[0_8px_30px_rgba(0,0,0,0.35)]"
               : "bg-white/10 backdrop-blur-lg"
           }
-          ${
-            isMenuOpen
-              ? "rounded-3xl md:rounded-full"
-              : "rounded-full"
-          }
+          rounded-full
           border border-white/20
         `}
       >
@@ -157,7 +154,6 @@ export function Navigation() {
               </button>
             ))}
 
-            {/* OUR GAMES */}
             <button
               onClick={goToGames}
               className={`relative text-sm font-medium transition-colors ${
@@ -175,50 +171,102 @@ export function Navigation() {
 
           {/* MOBILE TOGGLE */}
           <button
-            onClick={() => setIsMenuOpen(!isMenuOpen)}
+            onClick={() => setIsMenuOpen(true)}
             className="md:hidden text-white"
           >
-            {isMenuOpen ? <X size={20} /> : <Menu size={20} />}
+            <Menu size={22} />
           </button>
         </div>
-
-        {/* MOBILE MENU */}
-        <div
-          className={`md:hidden overflow-hidden transition-all duration-300 ${
-            isMenuOpen ? "max-h-72 opacity-100" : "max-h-0 opacity-0"
-          }`}
-        >
-          <div className="px-6 pb-4 pt-2 space-y-3">
-            {SECTIONS.map((s) => (
-              <button
-                key={s.id}
-                onClick={() => scrollTo(s.id)}
-                className={`block w-full text-left text-sm font-medium ${
-                  activeSection === s.id
-                    ? "text-white"
-                    : "text-gray-300 hover:text-white"
-                }`}
-              >
-                {s.label}
-              </button>
-            ))}
-
-            <button
-              onClick={goToGames}
-              className={`block w-full text-left text-sm font-medium ${
-                location.pathname === "/games"
-                  ? "text-white"
-                  : "text-gray-300 hover:text-white"
-              }`}
-            >
-              Our Games
-            </button>
-          </div>
-        </div>
       </div>
+
+      {/* ================= MOBILE LEFT GLASS DRAWER ================= */}
+      {isMenuOpen && (
+        <>
+          {/* OVERLAY */}
+          <div
+            onClick={() => setIsMenuOpen(false)}
+            className="
+              fixed inset-0 z-[998] md:hidden
+              bg-black/40 backdrop-blur-sm
+              pointer-events-auto
+            "
+          />
+          {/* DRAWER */}
+            <div
+              className="
+                fixed top-0 left-0 z-[999]
+                h-full w-[75%] max-w-sm
+                md:hidden
+                backdrop-blur-xl
+                border-r border-white/20
+                shadow-[0_0_40px_rgba(0,0,0,0.45)]
+                overflow-hidden
+                pointer-events-auto
+              "
+            >
+            {/* GLASS BACKPLATE */}
+            <div
+              className="
+                absolute inset-0
+                bg-gradient-to-br
+                from-white/25 via-white/10 to-white/5
+              "
+            />
+
+            {/* CONTENT */}
+            <div className="relative z-10">
+              {/* HEADER */}
+              <div className="flex items-center justify-between h-16 px-6 border-b border-white/20">
+                <div className="flex items-center gap-2">
+                  <img
+                    src="https://res.cloudinary.com/dk7hsdijn/image/upload/v1767576939/Logo_xhvxkx.svg"
+                    alt="GLORGAMES"
+                    className="h-9 w-auto"
+                  />
+                  <span className="montserrat-uniquifier text-lg text-white">
+                    GLORGAMES
+                  </span>
+                </div>
+
+                <button
+                  onClick={() => setIsMenuOpen(false)}
+                  className="text-white"
+                >
+                  <X size={24} />
+                </button>
+              </div>
+
+              {/* MENU */}
+              <div className="flex flex-col gap-6 px-6 pt-10">
+                {SECTIONS.map((s) => (
+                  <button
+                    key={s.id}
+                    onClick={() => scrollTo(s.id)}
+                    className={`text-xl font-semibold transition ${
+                      activeSection === s.id
+                        ? "text-white"
+                        : "text-gray-300 hover:text-white"
+                    }`}
+                  >
+                    {s.label}
+                  </button>
+                ))}
+
+                <button
+                  onClick={goToGames}
+                  className={`text-xl font-semibold transition ${
+                    location.pathname === "/games"
+                      ? "text-white"
+                      : "text-gray-300 hover:text-white"
+                  }`}
+                >
+                  Our Games
+                </button>
+              </div>
+            </div>
+          </div>
+        </>
+      )}
     </nav>
   );
-
-
-
 }

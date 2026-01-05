@@ -4,6 +4,7 @@ import { db } from "../firebase";
 import { GameCard } from "../components/GameCard";
 import { Game } from "../types";
 import { motion } from "framer-motion";
+import { InteractiveBackground } from "../components/InteractiveBackground";
 
 export function Games() {
   const [games, setGames] = useState<Game[]>([]);
@@ -29,6 +30,8 @@ export function Games() {
 
   return (
     <div className="relative min-h-screen bg-black text-white pt-28 overflow-hidden">
+      {/* ===== INTERACTIVE PARTICLE BACKGROUND ===== */}
+      <InteractiveBackground />
       {/* ===== BIG BLUE GLOW BACKGROUND ===== */}
       <div
         className="
@@ -40,7 +43,7 @@ export function Games() {
           blur-[160px]
         "
       />
-
+      {/* ===== CONTENT ===== */}
       <motion.div
         initial={{ opacity: 0, y: -20 }}
         animate={{ opacity: 1, y: 0 }}

@@ -9,12 +9,12 @@ import { HeroContent } from "../types";
 
 /* ================= PARTNERS DATA ================= */
 const PARTNERS = [
-  { name: "Unity", logo: "https://upload.wikimedia.org/wikipedia/commons/8/8a/Official_unity_logo.png" },
+  { name: "Unity", logo: "https://ik.imagekit.io/qxqjfbhle/Logo%20Brand/Official_unity_logo.svg" },
   { name: "Google", logo: "https://upload.wikimedia.org/wikipedia/commons/2/2f/Google_2015_logo.svg" },
-  { name: "Meta", logo: "https://upload.wikimedia.org/wikipedia/commons/thumb/7/7b/Meta_Platforms_Inc._logo.svg/960px-Meta_Platforms_Inc._logo.svg.png" },
-  { name: "Unreal Engine", logo: "https://upload.wikimedia.org/wikipedia/commons/thumb/e/e4/Unreal_Engine_horizontal_logo.svg/250px-Unreal_Engine_horizontal_logo.svg.png" },
-  { name: "Playfab", logo: "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSVjTEYAZUH9QkyOe3rcQ2-Sek1zYTez6ThcQ&s" },
-  { name: "AppLovin", logo: "https://upload.wikimedia.org/wikipedia/commons/4/45/AppLovin_logo.png" },
+  { name: "Meta", logo: "https://ik.imagekit.io/qxqjfbhle/Logo%20Brand/Meta_Platforms_Inc._logo.svg.svg" },
+  { name: "Unreal Engine", logo: "https://ik.imagekit.io/qxqjfbhle/Logo%20Brand/Unreal%20Engine.svg" },
+  { name: "Playfab", logo: "https://ik.imagekit.io/qxqjfbhle/Logo%20Brand/Playfab.svg" },
+  { name: "AppLovin", logo: "https://ik.imagekit.io/qxqjfbhle/Logo%20Brand/AppLovin_logo.svg" },
 ];
 
 export function Home() {
