@@ -1,12 +1,22 @@
-import { BrowserRouter as Router, Routes, Route, Link, useLocation } from "react-router-dom";
+import {
+  BrowserRouter as Router,
+  Routes,
+  Route,
+  Link,
+  useLocation,
+} from "react-router-dom";
 import { useEffect } from "react";
+
 import { Navigation } from "./components/Navigation";
+import CookieConsent from "./components/CookieConsent";
+
 import { Home } from "./pages/Home";
 import { Games } from "./pages/Games";
 import PrivacyPolicy from "./pages/PrivacyPolicy";
 import Document from "./pages/Document";
 import TermsOfService from "./pages/TermsOfService";
 import Help from "./pages/Help";
+
 import "./google-fonts.css";
 
 /* ================= SCROLL TO TOP ON ROUTE CHANGE ================= */
@@ -38,7 +48,7 @@ function Footer() {
             text-left
           "
         >
-          {/* LOGO – FULL WIDTH */}
+          {/* LOGO */}
           <div className="col-span-2 md:col-span-1 flex items-start">
             <img
               src="https://res.cloudinary.com/dk7hsdijn/image/upload/v1767576939/Logo_xhvxkx.svg"
@@ -78,12 +88,18 @@ function Footer() {
             </h4>
             <ul className="space-y-2 text-sm">
               <li>
-                <Link to="/privacy-policy" className="hover:text-white transition">
+                <Link
+                  to="/privacy-policy"
+                  className="hover:text-white transition"
+                >
                   Privacy
                 </Link>
               </li>
               <li>
-                <Link to="/terms-of-service" className="hover:text-white transition">
+                <Link
+                  to="/terms-of-service"
+                  className="hover:text-white transition"
+                >
                   Terms
                 </Link>
               </li>
@@ -141,7 +157,7 @@ function Footer() {
         {/* DIVIDER */}
         <div className="mt-12 border-t border-gray-800" />
 
-        {/* COPYRIGHT – LUÔN CENTER */}
+        {/* COPYRIGHT */}
         <div className="pt-6 text-center text-xs text-gray-500">
           © 2026 GLORGAMES. All rights reserved.
         </div>
@@ -166,13 +182,13 @@ function App() {
 
         <main className="flex-1">
           <Routes>
-            {/* LANDING PAGE */}
+            {/* LANDING */}
             <Route path="/" element={<Home />} />
 
-            {/* OUR GAMES */}
+            {/* GAMES */}
             <Route path="/games" element={<Games />} />
 
-            {/* LEGAL / SUPPORT */}
+            {/* LEGAL / DOCS */}
             <Route path="/privacy-policy" element={<PrivacyPolicy />} />
             <Route path="/terms-of-service" element={<TermsOfService />} />
             <Route path="/document" element={<Document />} />
@@ -182,6 +198,9 @@ function App() {
 
         <Footer />
       </div>
+
+      {/* 🍪 COOKIE CONSENT (hiện 1 lần) */}
+      <CookieConsent />
     </Router>
   );
 }

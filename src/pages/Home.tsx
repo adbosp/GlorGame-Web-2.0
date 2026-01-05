@@ -75,8 +75,8 @@ export function Home() {
             relative
             h-[85vh]
             min-h-[620px]
-            overflow-hidden
-
+            pb-[260px]
+            flex items-center justify-center
             after:content-['']
             after:absolute
             after:bottom-0
@@ -88,7 +88,8 @@ export function Home() {
             after:to-transparent
           "
         >
-          <div className="absolute inset-0">
+          {/* VIDEO LAYER */}
+          <div className="absolute inset-0 overflow-hidden">
             <video
               autoPlay
               muted
@@ -101,6 +102,7 @@ export function Home() {
             <div className="absolute inset-0 bg-gradient-to-t from-black/70 via-black/40 to-black/20" />
           </div>
 
+          {/* HERO CONTENT */}
           <div className="relative z-10 h-full flex flex-col items-center justify-center text-center px-6">
             <h1 className="text-5xl md:text-7xl font-bold mb-6 leading-tight">
               {heroContent.title}
@@ -124,10 +126,12 @@ export function Home() {
               <ArrowRight className="ml-3 h-5 w-5 transform group-hover:translate-x-1 transition-transform" />
             </Link>
           </div>
+
+          {/* 🔥 NEWS OVERLAY – PHẢI Ở ĐÂY */}
+          <NewsSection />
         </motion.section>
       )}
-      {/* ================= NEWS ================= */}
-      <NewsSection />
+
       {/* ================= PARTNERS + ABOUT ================= */}
       <section className="relative bg-black overflow-hidden">
         <div
@@ -140,7 +144,22 @@ export function Home() {
             blur-[140px]
           "
         />
-
+        {/* ================= ABOUT ================= */}
+        <section
+          id="about"
+          className="
+            relative
+            min-h-screen
+            flex
+            pt-[260px] md:pt-[220px]
+            items-center
+            bg-black
+          "
+        >
+          <div className="w-full">
+            <AboutSection />
+          </div>
+        </section>
         {/* ================= PARTNERS ================= */}
         <section id="partners" className="relative pt-16 pb-20">
           <div className="max-w-7xl mx-auto px-6 text-center">
@@ -176,9 +195,6 @@ export function Home() {
             </div>
           </div>
         </section>
-
-        {/* ================= ABOUT ================= */}
-        <AboutSection />
       </section>
     </div>
   );
