@@ -2,6 +2,7 @@ import { useState, useEffect } from "react";
 import { useLocation, useNavigate } from "react-router-dom";
 import { Menu, X } from "lucide-react";
 import "../google-fonts.css";
+import { motion, AnimatePresence } from "framer-motion";
 
 /* ================= SECTION CONFIG (HOME ONLY) ================= */
 const SECTIONS = [
@@ -178,21 +179,28 @@ export function Navigation() {
           </button>
         </div>
       </div>
+      {/* ================= MOBILE LEFT GLASS DRAWER (ANIMATED) ================= */}
+      <AnimatePresence>
+        {isMenuOpen && (
+          <>
+            {/* OVERLAY */}
+            <motion.div
+              key="overlay"
+              initial={{ opacity: 0 }}
+              animate={{ opacity: 1 }}
+              exit={{ opacity: 0 }}
+              transition={{ duration: 0.25, ease: "easeOut" }}
+              onClick={() => setIsMenuOpen(false)}
+              className="fixed inset-0 z-[998] md:hidden bg-black/40 backdrop-blur-sm pointer-events-auto"
+            />
 
-      {/* ================= MOBILE LEFT GLASS DRAWER ================= */}
-      {isMenuOpen && (
-        <>
-          {/* OVERLAY */}
-          <div
-            onClick={() => setIsMenuOpen(false)}
-            className="
-              fixed inset-0 z-[998] md:hidden
-              bg-black/40 backdrop-blur-sm
-              pointer-events-auto
-            "
-          />
-          {/* DRAWER */}
-            <div
+            {/* DRAWER */}
+            <motion.div
+              key="drawer"
+              initial={{ x: "-100%" }}
+              animate={{ x: 0 }}
+              exit={{ x: "-100%" }}
+              transition={{ duration: 0.35, ease: "easeOut" }}
               className="
                 fixed top-0 left-0 z-[999]
                 h-full w-[75%] max-w-sm
@@ -204,69 +212,85 @@ export function Navigation() {
                 pointer-events-auto
               "
             >
-            {/* GLASS BACKPLATE */}
-            <div
-              className="
-                absolute inset-0
-                bg-gradient-to-br
-                from-white/25 via-white/10 to-white/5
-              "
-            />
+              {/* GLASS BACKPLATE */}
+              <div
+                className="
+                  absolute inset-0
+                  bg-gradient-to-br
+                  from-white/25 via-white/10 to-white/5
+                "
+              />
 
-            {/* CONTENT */}
-            <div className="relative z-10">
-              {/* HEADER */}
-              <div className="flex items-center justify-between h-16 px-6 border-b border-white/20">
-                <div className="flex items-center gap-2">
-                  <img
-                    src="https://res.cloudinary.com/dk7hsdijn/image/upload/v1767576939/Logo_xhvxkx.svg"
-                    alt="GLORGAMES"
-                    className="h-9 w-auto"
-                  />
-                  <span className="montserrat-uniquifier text-lg text-white">
-                    GLORGAMES
-                  </span>
+              {/* CONTENT */}
+              <div className="relative z-10">
+                {/* HEADER */}
+                <div className="flex items-center justify-between h-16 px-6 border-b border-white/20">
+                  <div className="flex items-center gap-2">
+                    <img
+                      src="https://res.cloudinary.com/dk7hsdijn/image/upload/v1767576939/Logo_xhvxkx.svg"
+                      alt="GLORGAMES"
+                      className="h-9 w-auto"
+                    />
+                    <span className="montserrat-uniquifier text-lg text-white">
+                      GLORGAMES
+                    </span>
+                  </div>
+
+                  <button
+                    onClick={() => setIsMenuOpen(false)}
+                    className="text-white"
+                  >
+                    <X size={24} />
+                  </button>
                 </div>
 
-                <button
-                  onClick={() => setIsMenuOpen(false)}
-                  className="text-white"
+                {/* MENU */}
+                <motion.div
+                  initial="hidden"
+                  animate="show"
+                  variants={{
+                    hidden: {},
+                    show: {
+                      transition: {
+                        staggerChildren: 0.06,
+                        delayChildren: 0.1,
+                      },
+                    },
+                  }}
+                  className="flex flex-col gap-6 px-6 pt-10"
                 >
-                  <X size={24} />
-                </button>
+                  {[...SECTIONS, { id: "games", label: "Our Games" }].map(
+                    (item) => (
+                      <motion.button
+                        key={item.id}
+                        variants={{
+                          hidden: { opacity: 0, x: -10 },
+                          show: { opacity: 1, x: 0 },
+                        }}
+                        transition={{ duration: 0.25, ease: "easeOut" }}
+                        onClick={() =>
+                          item.id === "games"
+                            ? goToGames()
+                            : scrollTo(item.id)
+                        }
+                        className={`text-xl font-semibold transition ${
+                          activeSection === item.id ||
+                          location.pathname === "/games"
+                            ? "text-white"
+                            : "text-gray-300 hover:text-white"
+                        }`}
+                      >
+                        {item.label}
+                      </motion.button>
+                    )
+                  )}
+                </motion.div>
               </div>
+            </motion.div>
+          </>
+        )}
+      </AnimatePresence>
 
-              {/* MENU */}
-              <div className="flex flex-col gap-6 px-6 pt-10">
-                {SECTIONS.map((s) => (
-                  <button
-                    key={s.id}
-                    onClick={() => scrollTo(s.id)}
-                    className={`text-xl font-semibold transition ${
-                      activeSection === s.id
-                        ? "text-white"
-                        : "text-gray-300 hover:text-white"
-                    }`}
-                  >
-                    {s.label}
-                  </button>
-                ))}
-
-                <button
-                  onClick={goToGames}
-                  className={`text-xl font-semibold transition ${
-                    location.pathname === "/games"
-                      ? "text-white"
-                      : "text-gray-300 hover:text-white"
-                  }`}
-                >
-                  Our Games
-                </button>
-              </div>
-            </div>
-          </div>
-        </>
-      )}
     </nav>
   );
 }

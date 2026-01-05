@@ -6,6 +6,7 @@ import { AboutSection } from "../sections/AboutSection";
 import { collection, getDocs } from "firebase/firestore";
 import { db } from "../firebase";
 import { HeroContent } from "../types";
+import { NewsSection } from "../sections/NewsSection";
 
 /* ================= PARTNERS DATA ================= */
 const PARTNERS = [
@@ -70,7 +71,22 @@ export function Home() {
           initial={{ opacity: 0, y: 40 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.8, ease: "easeOut" }}
-          className="relative h-screen overflow-hidden"
+          className="
+            relative
+            h-[85vh]
+            min-h-[620px]
+            overflow-hidden
+
+            after:content-['']
+            after:absolute
+            after:bottom-0
+            after:left-0
+            after:right-0
+            after:h-32
+            after:bg-gradient-to-t
+            after:from-black
+            after:to-transparent
+          "
         >
           <div className="absolute inset-0">
             <video
@@ -104,13 +120,14 @@ export function Home() {
                 transition-all duration-300
               "
             >
-              Explore Our Games
+              Learn more
               <ArrowRight className="ml-3 h-5 w-5 transform group-hover:translate-x-1 transition-transform" />
             </Link>
           </div>
         </motion.section>
       )}
-
+      {/* ================= NEWS ================= */}
+      <NewsSection />
       {/* ================= PARTNERS + ABOUT ================= */}
       <section className="relative bg-black overflow-hidden">
         <div
