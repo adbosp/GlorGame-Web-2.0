@@ -24,22 +24,43 @@ export function AboutSection() {
       className="relative pt-36 pb-36 overflow-hidden"
       style={{ perspective: "1200px" }}
     >
-      <InteractiveBackground />
-
-      {/* FLOATING LOTTIE ITEMS */}
+      {/* ===== BACKGROUND ===== */}
       <div className="absolute inset-0 z-0">
+        <InteractiveBackground />
         <Floating3DItems />
       </div>
 
-      {/* CONTENT */}
+      {/* ===== CONTENT WRAPPER ===== */}
       <motion.div
         initial={{ opacity: 0, y: 40 }}
         whileInView={{ opacity: 1, y: 0 }}
         viewport={{ once: true }}
-        transition={{ duration: 0.8 }}
-        className="relative z-10 max-w-5xl mx-auto px-6 text-center"
+        transition={{ duration: 0.8, ease: "easeOut" }}
+        className="
+          relative
+          z-10
+          max-w-5xl
+          mx-auto
+          px-6
+          text-center
+        "
       >
-        <p className="text-xs uppercase tracking-widest text-gray-500 mb-6">
+        {/* ===== GLASS PANEL (ONLY BEHIND TEXT) ===== */}
+        <div
+          className="
+            absolute
+            inset-[-32px]
+            rounded-3xl
+
+            backdrop-blur-xl
+            bg-black/35
+
+            z-[-1]
+            pointer-events-none
+          "
+        />
+
+        <p className="text-xs uppercase tracking-widest text-gray-400 mb-6">
           About our studio
         </p>
 
@@ -50,7 +71,7 @@ export function AboutSection() {
           </span>
         </h2>
 
-        <p className="text-lg md:text-2xl text-gray-400 leading-relaxed">
+        <p className="text-lg md:text-2xl text-gray-300 leading-relaxed">
           {aboutInfo || "Loading..."}
         </p>
       </motion.div>

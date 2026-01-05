@@ -7,6 +7,7 @@ type NewsItem = {
   description: string;
   image: string;
 };
+
 /* ================= DATA ================= */
 const NEWS: NewsItem[] = [
   {
@@ -42,23 +43,45 @@ const NEWS: NewsItem[] = [
 /* ================= COMPONENT ================= */
 export function NewsSection() {
   return (
-    <section
-      className="
-        absolute
-        left-0 right-0
-        bottom-[-140px]
-        z-20
-      "
-    >
+    <section className="absolute left-0 right-0 bottom-[-140px] z-20">
       <div className="max-w-7xl mx-auto px-6">
         <motion.div
-          className="flex gap-8 justify-center"
+          className="
+            flex
+            gap-6 md:gap-8
+            md:justify-center
+
+            overflow-x-auto
+            md:overflow-visible
+
+            snap-x snap-mandatory
+            md:snap-none
+
+            scroll-smooth
+            overscroll-x-contain
+
+            pb-4
+          "
           initial={{ opacity: 0, y: 24 }}
           animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.6, ease: "easeOut" }}
+          transition={{ duration: 0.6, ease: 'easeOut' }}
         >
           {NEWS.map((item) => (
-            <NewsCard key={item.id} item={item} />
+            <div
+              key={item.id}
+              className="
+                snap-center
+                shrink-0
+
+                w-full
+                sm:w-[85%]
+                md:w-auto
+
+                flex justify-center
+              "
+            >
+              <NewsCard item={item} />
+            </div>
           ))}
         </motion.div>
       </div>
@@ -66,13 +89,15 @@ export function NewsSection() {
   );
 }
 
-/* ================= CARD ================= */
+/* ================= CARD (SAME FILE) ================= */
 function NewsCard({ item }: { item: NewsItem }) {
   return (
     <div
       className="
-        w-[390px]
+        w-full
+        sm:w-[360px]
         md:w-[360px]
+
         rounded-2xl
         overflow-hidden
         bg-black
@@ -80,7 +105,6 @@ function NewsCard({ item }: { item: NewsItem }) {
         group
       "
     >
-      {/* IMAGE + OVERLAY */}
       <div className="relative h-56 overflow-hidden">
         <img
           src={item.image}
@@ -93,10 +117,8 @@ function NewsCard({ item }: { item: NewsItem }) {
           "
         />
 
-        {/* DARK GRADIENT */}
         <div className="absolute inset-0 bg-gradient-to-t from-black/90 via-black/50 to-transparent" />
 
-        {/* CONTENT OVER IMAGE */}
         <div className="absolute inset-0 flex flex-col justify-end p-5">
           <h4 className="text-white text-lg font-semibold leading-snug mb-3">
             {item.title}
@@ -113,4 +135,3 @@ function NewsCard({ item }: { item: NewsItem }) {
     </div>
   );
 }
-
