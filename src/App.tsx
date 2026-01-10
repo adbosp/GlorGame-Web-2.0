@@ -9,7 +9,7 @@ import { useEffect } from "react";
 
 import { Navigation } from "./components/Navigation";
 import CookieConsent from "./components/CookieConsent";
-
+import { NewsDetail } from "./pages/NewsDetail";
 import { Home } from "./pages/Home";
 import { Games } from "./pages/Games";
 import PrivacyPolicy from "./pages/PrivacyPolicy";
@@ -196,6 +196,7 @@ function App() {
             <Route path="/terms-of-service" element={<TermsOfService />} />
             <Route path="/document" element={<Document />} />
             <Route path="/help" element={<Help />} />
+            <Route path="/news/:id" element={<NewsDetail />} />
           </Routes>
         </main>
 

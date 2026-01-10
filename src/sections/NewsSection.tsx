@@ -1,4 +1,5 @@
 import { motion } from "framer-motion";
+import { Link } from "react-router-dom";
 
 /* ================= TYPES ================= */
 type NewsItem = {
@@ -94,24 +95,25 @@ export function NewsSection() {
 /* ================= CARD (SAME FILE) ================= */
 function NewsCard({ item }: { item: NewsItem }) {
   return (
-    <div
+    <Link
+      to={`/news/${item.id}`}
       className="
+        block
         w-full
         max-w-[360px]
-
         md:max-w-[220px]
         lg:max-w-[260px]
         xl:max-w-[300px]
-
         rounded-2xl
         overflow-hidden
         bg-black
         shadow-[0_25px_60px_rgba(0,0,0,0.7)]
         group
+        transition-transform duration-300
+        hover:-translate-y-2
       "
     >
-
-      <div className="relative h-56 overflow-hidden">
+      <div className="relative h-56 overflow-hidden pointer-events-none">
         <img
           src={item.image}
           alt={item.title}
@@ -126,18 +128,16 @@ function NewsCard({ item }: { item: NewsItem }) {
         <div className="absolute inset-0 bg-gradient-to-t from-black/90 via-black/50 to-transparent" />
 
         <div className="absolute inset-0 flex flex-col justify-end p-5">
-          <h4 className="text-white text-lg font-semibold leading-snug mb-3">
+          <h4 className="text-white text-lg font-semibold mb-3">
             {item.title}
           </h4>
 
           <span className="text-sm text-white/90 flex items-center gap-2">
-            Read More
-            <span className="transition-transform group-hover:translate-x-1">
-              →
-            </span>
+            Read More →
           </span>
         </div>
       </div>
-    </div>
+    </Link>
   );
 }
+
